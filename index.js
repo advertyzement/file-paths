@@ -1,6 +1,9 @@
 const imageFormats = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
 
+const CDN_CLOUD = 'cdn-your_domain.com';
+
 const IMG_PREFIX = 'image/upload';
+const RAW_PREFIX = 'raw/upload';
 
 /**
  * To be used in CDN transformation
@@ -33,5 +36,27 @@ function getFileType(path) {
     return FILE_TYPE.IMAGE;
   } else {
     return FILE_TYPE.OTHER;
+  }
+}
+
+/**
+ * CDN upload prefix (Cup)
+ * @param fileType
+ * @returns {string}
+ */
+function createCupPrefix(fileType) {
+  return `https://${CDN_CLOUD}/${fileType}`;
+}
+
+function createCupPrefixForTransform(path) {
+  const fileType = getFileType(path);
+
+  switch (fileType) {
+    case FILE_TYPE.IMAGE: {
+      return createCupPrefix(IMG_PREFIX);
+    }
+    default: {
+      return createCupPrefix(RAW_PREFIX);
+    }
   }
 }
