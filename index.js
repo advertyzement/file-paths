@@ -8,6 +8,11 @@ const IMG_PREFIX = 'image/upload';
 const THUMBNAIL_TRANSFORMATION = 'w_144';
 const PREVIEW_TRANSFORMATION = 'w_300';
 
+const FILE_TYPE = {
+  IMAGE: 'IMAGE',
+  OTHER: 'OTHER',
+};
+
 function getExtension(path) {
   const fullFileName = path.substring(path.lastIndexOf('/') + 1);
   return fullFileName.substring(fullFileName.lastIndexOf('.') + 1).toLowerCase();
@@ -19,4 +24,14 @@ function getPathWithoutExtension(path) {
     lastIndex = path.length;
   }
   return path.substring(0, lastIndex);
+}
+
+function getFileType(path) {
+  const extension = getExtension(path);
+
+  if (imageFormats.includes(extension)) {
+    return FILE_TYPE.IMAGE;
+  } else {
+    return FILE_TYPE.OTHER;
+  }
 }
